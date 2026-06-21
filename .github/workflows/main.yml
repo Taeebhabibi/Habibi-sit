@@ -47,7 +47,10 @@ jobs:
 
       - name: Download Repository
         uses: actions/checkout@v4
-
+      - name:  show currint folder
+        run: |
+          pwd
+          ls -la
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 
