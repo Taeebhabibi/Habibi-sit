@@ -1,11 +1,8 @@
 name: CI-CD Pipeline
 
 on:
-
   push:
-
     branches:
-
       - main
 
 jobs:
@@ -15,44 +12,49 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Dowload Repa
+
+      - name: Download Repository
         uses: actions/checkout@v4
 
-      - name: install node
+      - name: Install Node
         uses: actions/setup-node@v4
-        with:
-          node-version: 20
 
-      - name: install Html checker
+        with:
+          node-version: 24
+
+      - name: Install HTML Checker
         run: npm install -g htmlhint
-      - name: chect Html
+
+      - name: Check HTML
         run: htmlhint index.html
+
+
   deploy:
+
     needs: test
 
     runs-on: ubuntu-latest
 
+    permissions:
+      pages: write
+      id-token: write
 
-    permissions: write-all
     environment:
       name: github-pages
 
-
     steps:
-      - name: Download repa
+
+      - name: Download Repository
         uses: actions/checkout@v4
 
-      - name: setup githun pages
+      - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 
-
-
-      - name: upload ebsite
-
+      - name: Upload Website
         uses: actions/upload-pages-artifact@v3
-        
+
         with:
-          path: .
-  
-      - name: Deployweb
+          path: ./
+
+      - name: Deploy Website
         uses: actions/deploy-pages@v4
